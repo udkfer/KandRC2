@@ -1,15 +1,21 @@
+// Exercise 1-9. Write a program to copy its input to its output, replacing each string of one or more blanks by a single blank.
 #include <stdio.h>
 
 int main()
 
 {
-  char c, ot;
+  int c, pc;
 
-  ot = 0;
+  pc = 0;
 
   while ((c = getchar()) != EOF) {
-    if (c == (' ' | '\t' | '\n'))
-      printf("%c\n", ot);
+    if (c != ' ') {
+      putchar(c);
+      if (pc == 0) {
+        pc = 1;
+        putchar(' ');
+      }
+    }
   }
-  printf("%s\n", ot);
+  return 0;
 }

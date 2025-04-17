@@ -2,19 +2,43 @@
 
 #include <stdio.h>
 
-int main() {
-  int c, nw;
+#define IN   1
+#define OUT  0
 
-  nw = 0;
+int main() {
+  int c, c_count, length_index, bar_size, word_state;
+  int word_length_count[10] = {0};
+
+  word_state = OUT;
+  c = c_count = 0;
 
   while ((c = getchar()) != EOF) {
-    if ( c == ' ') {
-      nw = 1;
-      putchar('\n');
-    }
-    else if (putchar('.')) {
+    if ((c == ' ') || (c == '\t') || (c == '\n')) {
+      if (word_state == IN) {
+        ++word_length_count[c_count];
+        c_count = 0;
+        word_state = OUT;
+      }
+    } else {
+      ++c_count;
+      word_state = IN;
     }
   }
+  if (word_state == IN) {
+    if (c_count >= 10) c_count = 9;
+    ++word_length_count[c_count];
+  }
+
+  for (length_index = 1; length_index < 10; length_index++) {
+    if (word_length_count[length_index] > 0) {
+      printf("%d: ", length_index);
+      for (bar_size = 0; bar_size < word_length_count[length_index]; bar_size++) {
+        putchar('*');
+      }
+      printf("\n");
+    }
+  }
+
   return 0;
 }
 
